@@ -1,5 +1,10 @@
 
-
+const renderClass = classes => {
+	if (classes=== "table-light") return "Обычная";
+	if (classes=== "table-warning") return "Важная";
+	if (classes=== "table-danger") return "Срочная";
+	if (classes=== "table-success") return "Обычная";
+}
 
 const createRow = (id, text, classes, length) => {
 	const tr = document.createElement('tr');
@@ -20,7 +25,7 @@ const createRow = (id, text, classes, length) => {
 		selectOption.textContent = option;
 		select.append(selectOption);
 	});
-
+	select.value = renderClass(classes)
 	btnSuccess.classList = "btn btn-success"
 	btnSuccess.textContent = 'Завершить'
 	btnDelete.classList = "btn btn-danger"
@@ -28,6 +33,8 @@ const createRow = (id, text, classes, length) => {
 	BtnEdit.classList= "btn btn-primary"
 	BtnEdit.textContent = 'Редактировать'
 	tdBtns.append(btnDelete, btnSuccess,BtnEdit, select)
+
+
 	tdProcess.textContent = classes==="table-success"? 'Выполнена' : 'В процессе'
 	tdTask.classList = classes==="table-success" ? "text-decoration-line-through" : "task"
 	tdTask.textContent = text;

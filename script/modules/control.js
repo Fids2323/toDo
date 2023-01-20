@@ -2,6 +2,7 @@ import {setStorage, getStorage, removeStorage, classStorage,editStorage} from ".
 import createRow from './createElements.js'
 import { renderNumbers } from "./render.js"
 
+//Importance todo
 const importanceControl = (tbody,name) => {
 	const optionsMap = {
 		"Обычная": "table-light",
@@ -12,23 +13,25 @@ const importanceControl = (tbody,name) => {
 		const target = e.target
 		if(target.classList.contains('form-select')){
 			const tr = target.closest('tr')
-			const task = tr.querySelectorAll('td')[1]
-			task.className = 'task'
 			const index= tr.dataset.id
 			const selectedValue = target.value;
 			tr.className = optionsMap[selectedValue]
 			classStorage(name, index, tr.className)
 		}
-	
 	})
 }
 
-
+//Edit todo
 const editControl = (tbody, name) => {
 	tbody.addEventListener('click', (e) =>{
 		const target = e.target
 		if(target.classList.contains('btn-primary')){
 			const tr = target.closest('tr')
+			const formSelect = tr.querySelector('.form-select')
+			const task = tr.querySelectorAll('td')[1]
+			task.addEventListener('input', (e) => {
+				formSelect.value = 'Обычная'
+			})
 			const tdTask = tr.querySelectorAll('td')[1]
 			tdTask.setAttribute("contenteditable", true)
 			tdTask.addEventListener("input", e => {
@@ -39,9 +42,9 @@ const editControl = (tbody, name) => {
 			})
 		}
 	})
-	
 }
 
+//Input disabled btn
 const inputControl = () => {
 	const form = document.querySelector("form");
 	const input = form.querySelector("input.form-control");
@@ -56,6 +59,7 @@ const inputControl = () => {
 	});
 }
 
+//Delete and rerender num of rows
 const deleteTodo = (tbody, name) => {
 	tbody.addEventListener('click', (e) =>{
 		const target = e.target
@@ -71,6 +75,7 @@ const deleteTodo = (tbody, name) => {
 	})
 }
 
+//Success toDO and cancel
 const successTodo = (tbody,name) => {
 	tbody.addEventListener('click', (e) =>{
 		e.preventDefault();
@@ -94,8 +99,6 @@ const successTodo = (tbody,name) => {
 		}
 	})
 }
-
-
 
 const formControl = (name) => {
 	const form = document.querySelector('form')
